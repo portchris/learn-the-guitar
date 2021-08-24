@@ -1,0 +1,19 @@
+server {
+
+	listen {{VIRTUAL_PORT}};
+	listen [::]:{{VIRTUAL_PORT}};
+
+	server_name {{HOST}};
+
+	root {{WEBROOT}};
+	index index.js;
+
+	include /etc/nginx/global/upstreams.conf;
+	include /etc/nginx/global/locations.conf;
+	include /etc/nginx/global/static.conf;
+	include /etc/nginx/global/error-pages.conf;
+
+	location / {
+		try_files $uri $uri/ /index.js$is_args$args;
+	}
+}
